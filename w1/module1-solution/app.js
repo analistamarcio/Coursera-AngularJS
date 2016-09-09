@@ -26,15 +26,18 @@ function LunchCheckController($scope) {
 
     switch (countItems) {
       case 0:
-        $scope.message = "Please enter data first."
+        $scope.style = {color: 'red'};
+        $scope.message = "Please enter data first.";
         break;
       case 1:
       case 2:
       case 3:
-        $scope.message = "Enjoy!"
+        $scope.style = {color: 'green'};
+        $scope.message = "Enjoy!";
         break;
       default:
-        $scope.message = "Too much!"
+        $scope.style = {color: 'green'};
+        $scope.message = "Too much!";
     }
   };
 
