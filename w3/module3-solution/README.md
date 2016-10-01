@@ -1,5 +1,5 @@
 ## Single Page Web Applications with AngularJS
-**(Johns Hopkins University - Coursera)
+**(Johns Hopkins University - Coursera)**
 
 Module 3 Coding Assignment
 =======
