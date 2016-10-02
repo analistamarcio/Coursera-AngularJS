@@ -1,102 +1,75 @@
 (function () {
 'use strict';
 
-angular.module('ShoppingListCheckOff', [])
-.controller('ToBuyController', ToBuyController)
-.controller('AlreadyBoughtController', AlreadyBoughtController)
-.service('ShoppingListCheckOffService', ShoppingListCheckOffService);
+angular.module('NarrowItDownApp', [])
+.controller('NarrowItDownController', NarrowItDownController)
+.service('MenuSearchService', MenuSearchService)
+.constant('ApiBasePath', "http://davids-restaurant.herokuapp.com")
+.directive('foundItems', FoundItems);
 
-ToBuyController.$inject = ['ShoppingListCheckOffService'];
-function ToBuyController(ShoppingListCheckOffService) {
-  var toBuyItems = this;
-
-  toBuyItems.items = ShoppingListCheckOffService.getToBuyItems();
-
-  toBuyItems.removeToBuyItem = function (itemIdex) {
-    ShoppingListCheckOffService.removeToBuyItem(itemIdex);
-  }
+function FoundItems() {
+  var ddo = {
+    templateUrl: 'foundItems.html',
+    restrict: 'E',
+    scope: {
+        foundItems: '<',
+        onRemove: '&'
+    }
+  };
+  return ddo;
 }
 
 
-AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
-function AlreadyBoughtController(ShoppingListCheckOffService) {
-  var boughtList = this;
+NarrowItDownController.$inject = ['MenuSearchService'];
+function NarrowItDownController(MenuSearchService) {
+  var menu = this;
+  menu.searchTerm = "";
+  menu.errMessage = "";
+  menu.found = [];
 
-  boughtList.items = ShoppingListCheckOffService.getBoughtItems();
-
-  boughtList.removeBoughtList = function (itemIdex) {
-    ShoppingListCheckOffService.removeBoughtList(itemIdex);
+  menu.getItems = function () {
+    if (menu.searchTerm) {
+      var promise = MenuSearchService.getMatchedMenuItems(menu.searchTerm);
+      promise.then(function (response) {
+        menu.found = response;
+      });
+    }
+    menu.found ? (menu.errMessage = "Nothing found!", menu.found = []) : menu.errMessage = "";
   }
+
+  menu.removeItem = function (index) {
+    menu.found.splice(index, 1);
+  };
+
 }
 
-function ShoppingListCheckOffService() {
+MenuSearchService.$inject = ['$http', 'ApiBasePath'];
+function MenuSearchService($http, ApiBasePath) {
   var service = this;
 
-  // To buy list
-  var toBuyItems = [
-    {
-      name: "Cookies",
-      quantity: 10
-    },
-    {
-      name: "Chips",
-      quantity: 5
-    },
-    {
-      name: "Pepto Bismol",
-      quantity: 15
-    },
-    {
-      name: "Chocolate",
-      quantity: 12
-    },
-    {
-      name: "Peanut Butter",
-      quantity: 9
-    }
-  ];
+  service.getMatchedMenuItems = function (searchTerm) {
+    return $http({
+      method: "GET",
+      url: (ApiBasePath + "/menu_items.json")
+    }).then(function (result) {
+      var foundItems = [];
 
-  // Already bought list
-  var boughtItems = [];
+      if (searchTerm) {
+        var menuListArray = result.data.menu_items;
+        for (var i = 0; i < menuListArray.length; i++) {
+          var itemDescription = menuListArray[i].description;
+          if (itemDescription.includes(searchTerm)) {
+            foundItems.push(menuListArray[i]);
+          }
+        }
+      }
 
-  service.removeToBuyItem = function (itemIndex) {
-    // Add bought item to Already bought list before remove from To buy list
-    AddBoughtItem (toBuyItems[itemIndex].name, toBuyItems[itemIndex].quantity);
-    // Remove item from To buy list
-    toBuyItems.splice(itemIndex, 1);
-  };
-
-  function AddBoughtItem (itemName, quantity) {
-    var item = {
-      name: itemName,
-      quantity: quantity
-    };
-    boughtItems.push(item);
-  };
-
-  service.removeBoughtList = function (itemIndex) {
-    // Add removed item from Already bought list before put it back to the To buy list
-    AddToBuyItem (boughtItems[itemIndex].name, boughtItems[itemIndex].quantity);
-    // Remove item from Already bought list
-    boughtItems.splice(itemIndex, 1);
-  };
-
-  function AddToBuyItem (itemName, quantity) {
-    var item = {
-      name: itemName,
-      quantity: quantity
-    };
-    toBuyItems.push(item);
-  };
-
-  service.getToBuyItems = function () {
-    return toBuyItems;
-  };
-
-  service.getBoughtItems = function () {
-    return boughtItems;
-  };
-
+      return foundItems;
+    }).catch(function (error) {
+      console.log("Something went terribly wrong.");
+    });
+  }
 }
+
 
 })();

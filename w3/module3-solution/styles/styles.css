@@ -5,6 +5,11 @@ input[type="text"] {
   width: 200px;
   float: left;
 }
+.alert {
+    display: block;
+    clear: both;
+    color: red;
+}
 .narrow-button {
   float: left;
   margin-left: 10px;
@@ -49,4 +54,10 @@ input[type="text"] {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+found-items {
+  display: block;
+  margin:10pt;
+  padding-top: 30pt;
 }
