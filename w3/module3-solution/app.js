@@ -24,7 +24,7 @@ NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) {
   var menu = this;
   menu.searchTerm = "";
-  menu.errMessage = "";
+  menu.showErrMessage = false;
   menu.found = [];
 
   menu.getItems = function () {
@@ -32,13 +32,17 @@ function NarrowItDownController(MenuSearchService) {
       var promise = MenuSearchService.getMatchedMenuItems(menu.searchTerm);
       promise.then(function (response) {
         menu.found = response;
+        menu.showErrMessage = (menu.found.length === 0);
       });
+    } else {
+      menu.showErrMessage = true;
+      menu.found = [];
     }
-    menu.found ? (menu.errMessage = "Nothing found!", menu.found = []) : menu.errMessage = "";
-  }
+  };
 
   menu.removeItem = function (index) {
     menu.found.splice(index, 1);
+    menu.showErrMessage = (menu.found.length === 0);
   };
 
 }
