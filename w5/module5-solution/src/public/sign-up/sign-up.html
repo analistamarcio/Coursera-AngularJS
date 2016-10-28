@@ -1,0 +1,66 @@
+<div class="container">
+	<h2 class="text-center">Sign Up</h2>
+      <div class="form-group col-md-12">
+      <fieldset>
+        <form name="signUpForm" novalidate>
+          <div class="col-md-12"><!-- first name -->
+            <div class="col-md-2 text-left">First Name:</div>
+            <div class="col-md-7">
+              <input type="text" class="form-control" name="firstName" ng-model="signUpCtrl.firstName" placeholder="Enter first name" required minlength="4">
+            </div>
+            <div class="col-md-3 text-left warning" ng-if="signUpForm.firstName.$error.required && signUpForm.firstName.$touched">First Name is required</div>
+          </div><!-- first name -->
+          <div class="col-md-12"></div>
+
+          <div class="col-md-12"><!-- last name -->
+            <div class="col-md-2 text-left">Last Name:</div>
+            <div class="col-md-7">
+              <input type="text" class="form-control" name="lastName" ng-model="signUpCtrl.lastName" placeholder="Enter last name" required>
+            </div>
+            <div class="col-md-3 text-left warning" ng-if="signUpForm.lastName.$error.required && signUpForm.lastName.$touched">Last Name is required</div>
+          </div><!-- last name -->
+          <div class="col-md-12"></div>
+
+          <div class="col-md-12"><!-- e-mail address -->
+            <div class="col-md-2 text-left">E-mail Address:</div>
+            <div class="col-md-7">
+              <input type="email" class="form-control" name="email" ng-model="signUpCtrl.email" placeholder="Enter e-mail" required>
+            </div>
+            <div class="col-md-3 text-left warning" ng-if="signUpForm.email.$invalid && signUpForm.email.$touched">E-mail is required</div>
+          </div><!-- e-mail address -->
+          <div class="col-md-12"></div>
+
+          <div class="col-md-12"><!-- phone number -->
+            <div class="col-md-2 text-left">Phone Number:</div>
+            <div class="col-md-7">
+              <input type="text" class="form-control" name="phoneNumber" ng-model="signUpCtrl.phoneNumber" placeholder="Enter phone number" required>
+            </div>
+            <div class="col-md-3 text-left warning" ng-if="signUpForm.phoneNumber.$error.required && signUpForm.phoneNumber.$touched">Phone Number is required</div>
+          </div><!-- phone number -->
+          <div class="col-md-12"></div>
+
+          <div class="col-md-12"><!-- menu number -->
+            <div class="col-md-2 text-left">Menu Number:</div>
+            <div class="col-md-7">
+              <input type="text" class="form-control" name="menuNumber"  ng-model="signUpCtrl.menuNumber" placeholder="Enter menu number" required>
+            </div>
+            <div class="col-md-3 text-left warning">
+              <span ng-if="signUpForm.menuNumber.$error.required && signUpForm.menuNumber.$touched">Menu Number is required</span>
+              <span ng-if="!signUpCtrl.validDish">No such menu number exists.</span>
+            </div>
+          </div><!-- menu number -->
+          <div class="col-md-12"></div>
+
+          <div class="col-md-12"><!-- submit button -->
+            <div class="col-md-2"></div>
+            <div class="col-md-7">
+              <button type="submit" ng-disabled="signUpForm.$invalid" ng-click="signUpCtrl.submit()" class="btn btn-primary">Submit</button>
+            </div>
+          </div><!-- submit button -->
+          <div class="col-md-12 warning text-center">
+            <span ng-if="signUpCtrl.saved">Your information has been saved.</span>
+          </div>
+        </form>
+      </fieldset>
+      </div><!-- form-group -->
+</div>

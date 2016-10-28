@@ -1,0 +1,51 @@
+<div class="container"><!-- container -->
+
+	<div class="text-center" ng-if="infoCtrl.user.firstName == undefined"><!-- if not signed up yet -->
+		<span>
+			Not Signed Up Yet. <a ui-sref="public.signup">Sign up Now!</a>
+		</span>
+	</div><!-- if not signed up yet -->
+
+	<div class="col-md-12 col-sm-12 col-xs-12 col-xxs-12" ng-if="infoCtrl.user.firstName != undefined"><!-- already signed up -->
+		<h2 class="text-left">User Informations</h2><hr>
+
+		<div  class="col-md-6 col-sm-6 col-xs-6 col-xxs-6"><!-- text data -->
+			<div class="col-md-8 col-sm-8 col-xs-12 col-xxs-12">
+				<div>First Name:&nbsp;&nbsp;&nbsp;</div>
+		        <div class="user-data">{{infoCtrl.user.firstName}}</div>
+	        </div>
+			<div class="col-md-8 col-sm-8 col-xs-12 col-xxs-12">
+				<div>Last Name:&nbsp;&nbsp;&nbsp;</div>
+		        <div class="user-data">{{infoCtrl.user.lastName}}</div>
+	        </div>
+			<div class="col-md-8 col-sm-8 col-xs-12 col-xxs-12">
+				<div>E-mail Address:&nbsp;&nbsp;&nbsp;</div>
+		        <div class="user-data">{{infoCtrl.user.email}}</div>
+	        </div>
+			<div class="col-md-8 col-sm-8 col-xs-12 col-xxs-12">
+				<div>Phone Number:&nbsp;&nbsp;&nbsp;</div>
+		        <div class="user-data">{{infoCtrl.user.phoneNumber}}</div>
+	        </div>
+		</div><!-- user text data -->
+
+		<!-- user image data -->
+		<div class="menu-item-tile col-md-6 col-sm-6 col-xs-12 col-xxs-12 text-left">
+		  <div class="row text-left">
+		    <div class="col-sm-4">
+		      <div class="menu-item-photo">
+		        <div>{{infoCtrl.user.prefDish.short_name}}</div>
+		        <img class="img-responsive" width="250" height="150" ng-src="{{infoCtrl.basePath}}/images/{{infoCtrl.user.prefDish.short_name}}.jpg" alt="{{infoCtrl.user.prefDish.name}}">
+		      </div>
+		      <div class="menu-item-price">{{infoCtrl.user.prefDish.price_small | currency}}<span> {{infoCtrl.user.prefDish.small_portion_name}}</span> {{infoCtrl.user.prefDish.price_large | currency}} <span>{{infoCtrl.user.prefDish.large_portion_name}}</span></div>
+		    </div>
+		    <div class="menu-item-description col-sm-7">
+		      <h3 class="menu-item-title">{{infoCtrl.user.prefDish.name}}</h3>
+		      <p class="menu-item-details">{{infoCtrl.user.prefDish.description}}</p>
+		    </div>
+		  </div>
+		</div>
+		<!-- user image data -->
+
+	</div><!-- already signed up -->
+
+</div><!-- container -->
