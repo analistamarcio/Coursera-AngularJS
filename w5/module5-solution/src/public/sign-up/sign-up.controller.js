@@ -16,9 +16,6 @@ function SignUpController(SignUpFormData) {
   signUpCtrl.validDish = true;
   signUpCtrl.saved = false;
 
-  // signUpCtrl.message = "";
-  // signUpCtrl.error = "";
-
   signUpCtrl.submit = function () {
     var promise = SignUpFormData.checkDish(signUpCtrl.menuNumber);
 

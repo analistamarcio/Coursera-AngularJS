@@ -9,7 +9,6 @@ function MyInfoController(user, ApiPath) {
 	var infoCtrl = this;
 	infoCtrl.user = user;
 	infoCtrl.basePath = ApiPath;
-	console.log('user = ' + infoCtrl.user);
 }
 
 
